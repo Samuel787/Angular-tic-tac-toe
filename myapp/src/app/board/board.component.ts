@@ -24,16 +24,21 @@ export class BoardComponent implements OnInit {
   }
 
   get player(){
+    if(this.winner != null && this.winner != ""){
+      return "Winner is: " + this.winner;
+    }
     return this.xIsNext ? 'X' : 'O';
   }
 
   makeMove(idx: number){
-    if(!this.squares[idx]){
-      this.squares.splice(idx, 1, this.player)
-      this.xIsNext = !this.xIsNext;
+    if(this.winner == "" || this.winner === null){
+      if(!this.squares[idx]){
+        this.squares.splice(idx, 1, this.player)
+        this.xIsNext = !this.xIsNext;
+      }
+  
+      this.winner = this.calculateWinner();
     }
-
-    this.winner = this.calculateWinner();
   }
 
   calculateWinner(){
